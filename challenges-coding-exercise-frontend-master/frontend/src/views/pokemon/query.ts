@@ -16,7 +16,13 @@ export const GET_POKEMON_BY_NAME = gql`
             maxCP,
             maxHP,
             types,
-            isFavorite
+            isFavorite,
+            evolutions {
+                name,
+                id, 
+                image,
+                isFavorite
+              }
         }
     }
 

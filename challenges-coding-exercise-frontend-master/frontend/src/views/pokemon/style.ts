@@ -24,6 +24,18 @@ export const PokemonImageBody = styled(Grid)`
     }
 `
 
+export const Evolutions = styled(Grid)`
+    grid-template-columns: repeat(auto-fill, 11.581rem);
+    grid-template-rows: auto;
+    justify-content: start;
+    grid-gap: 1rem;
+    align-self: start;
+    ${props => props.list && css`
+        grid-template-columns: none;
+        grid-template-rows: 1fr;
+    `}
+`
+
 export const VolumeButton = styled(FavButton)`
     font-size: ${Theme.fontSizeXXL};
     color: ${Theme.colors.green};

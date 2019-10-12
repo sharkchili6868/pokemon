@@ -10,7 +10,8 @@ import {
     PokemonName,
     PokemonStamina,
     Bar,
-    PokemonDimension
+    PokemonDimension,
+    Evolutions
 } from './style';
 import { FavButton } from 'views/dashboard/style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,6 +21,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { ADD_FAVORITE, REMOVE_FAVORITE } from 'views/dashboard/query';
 import { useMutation } from '@apollo/react-hooks';
+import  PokemonPiece from 'views/pokemon/components/evolutions';
 
 
 interface PokemonProps {
@@ -32,7 +34,7 @@ export const Pokemon = (props: PokemonProps) => {
     const [removeFavorites] = useMutation(REMOVE_FAVORITE);
 
     if (!data) return null;
-    const {image, sound, name, types, isFavorite, maxCP, maxHP, weight, height, id} = data.pokemonByName;
+    const {image, sound, name, types, isFavorite, maxCP, maxHP, weight, height, id, evolutions} = data.pokemonByName;
 
     const playAudio = () => {
         const audio:HTMLAudioElement = new Audio(sound);
@@ -46,6 +48,12 @@ export const Pokemon = (props: PokemonProps) => {
             addFavorites({variables: {id}});
         }
     }
+
+    const displayPokemons = () => {           
+        return evolutions.map((pokemon: any) => {
+            return <PokemonPiece key={pokemon.name} pokemon={pokemon} list={false} />
+        })
+}
     
     return (
         <PokemonLayout>
@@ -84,6 +92,10 @@ export const Pokemon = (props: PokemonProps) => {
                         </PokemonDimension>
                     </PokemonInitials>
             </PokemonBottom>
+            <h4>Evolutions</h4>
+            <Evolutions>
+                {displayPokemons()}
+            </Evolutions>
         </PokemonLayout>
     )
 }
